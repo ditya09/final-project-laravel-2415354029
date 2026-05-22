@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\ReportController;
+use App\Http\Controllers\Api\ServiceController;
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/customers', [CustomerController::class, 'index']);
@@ -22,3 +23,4 @@ Route::get('/customers/city/{city}', [CustomerController::class, 'city']);
 Route::get('/transactions/summary', [TransactionController::class, 'summary']);
 Route::get('/report/{year}/{month}', [ReportController::class, 'monthly']);
 Route::get('/transactions/customer/{name}', [TransactionController::class, 'customer']);
+Route::get('/services', [ServiceController::class, 'index']);
