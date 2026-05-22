@@ -14,6 +14,7 @@ class ServiceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $status = $request->query("status");
+        $search = $request->query("search");
 
         $query = Service::query();
 
@@ -30,6 +31,9 @@ class ServiceController extends Controller
             }
 
             $query->where("status", $status === "active");
+        }
+        if ($search !== null) {
+            $query->where("name", "like", "%{$search}%");
         }
 
         $services = $query->latest()->get();
