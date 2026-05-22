@@ -23,4 +23,15 @@ Route::get('/customers/city/{city}', [CustomerController::class, 'city']);
 Route::get('/transactions/summary', [TransactionController::class, 'summary']);
 Route::get('/report/{year}/{month}', [ReportController::class, 'monthly']);
 Route::get('/transactions/customer/{name}', [TransactionController::class, 'customer']);
-Route::get('/services', [ServiceController::class, 'index']);
+
+Route::apiResource("services", ServiceController::class);
+
+Route::patch("services/{service}/activate", [
+    ServiceController::class,
+    "activate",
+]);
+
+Route::patch("services/{service}/deactivate", [
+    ServiceController::class,
+    "deactivate",
+]);
