@@ -43,12 +43,20 @@ class ServiceController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            "name" => ["required", "string"],
-            "price" => ["required", "integer", "min:0"],
-            "description" => ["nullable", "string"],
-            "status" => ["nullable", "boolean"],
-        ]);
+        $data = $request->validate(
+            [
+                "name" => ["required", "string"],
+                "price" => ["required", "integer", "min:0"],
+                "description" => ["nullable", "string"],
+                "status" => ["nullable", "boolean"],
+            ],
+            [
+                "name.required" => "Service name is required",
+                "price.required" => "Price is required",
+                "price.integer" => "Price must be a number",
+                "price.min" => "Price cannot be negative",
+            ]
+        );
 
         $data["status"] = $data["status"] ?? true;
 
@@ -92,12 +100,18 @@ class ServiceController extends Controller
             ], 404);
         }
 
-        $data = $request->validate([
-            "name" => ["sometimes", "string"],
-            "price" => ["sometimes", "integer", "min:0"],
-            "description" => ["nullable", "string"],
-            "status" => ["nullable", "boolean"],
-        ]);
+        $data = $request->validate(
+            [
+                "name" => ["sometimes", "string"],
+                "price" => ["sometimes", "integer", "min:0"],
+                "description" => ["nullable", "string"],
+                "status" => ["nullable", "boolean"],
+            ],
+            [
+                "price.integer" => "Price must be a number",
+                "price.min" => "Price cannot be negative",
+            ]
+        );
 
         $service->update($data);
 
